@@ -5,16 +5,21 @@
 # @Last Modified time: 2019-06-09 11:39:26
 
 # 软件包列表
-pkglist="wget unzip grep sed tar ca-certificates coreutils-whoami php7 php7-cgi php7-cli php7-fastcgi php7-fpm php7-mod-mysqli php7-mod-pdo php7-mod-pdo-mysql nginx-extras mariadb-server mariadb-server-extra mariadb-client mariadb-client-extra"
+pkglist="wget wget-ssl lsof unzip grep sed tar ca-certificates coreutils-whoami php8 php8-cgi php8-cli php8-fastcgi php8-fpm nginx mariadb-server mariadb-server-extra mariadb-client mariadb-client-extra"
+# pkglist="wget unzip grep sed tar ca-certificates coreutils-whoami php8 php8-cgi php8-cli php8-fastcgi php8-fpm php8-mod-mysqli php8-mod-pdo php8-mod-pdo-mysql nginx-extras" 
 
-phpmod="php7-mod-calendar php7-mod-ctype php7-mod-curl php7-mod-dom php7-mod-exif php7-mod-fileinfo php7-mod-ftp php7-mod-gd php7-mod-gettext php7-mod-gmp php7-mod-hash php7-mod-iconv php7-mod-intl php7-mod-json php7-mod-ldap php7-mod-session php7-mod-mbstring php7-mod-opcache php7-mod-openssl php7-mod-pcntl php7-mod-phar php7-pecl-redis php7-mod-session php7-mod-shmop php7-mod-simplexml php7-mod-snmp php7-mod-soap php7-mod-sockets php7-mod-sqlite3 php7-mod-sysvmsg php7-mod-sysvsem php7-mod-sysvshm php7-mod-tokenizer php7-mod-xml php7-mod-xmlreader php7-mod-xmlwriter php7-mod-zip php7-pecl-dio php7-pecl-http php7-pecl-libevent php7-pecl-propro php7-pecl-raphf redis snmpd snmp-mibs snmp-utils zoneinfo-core zoneinfo-asia"
+
+
+phpmod="php8-mod-bcmath php8-mod-calendar php8-mod-ctype php8-mod-curl php8-mod-dom php8-mod-exif php8-mod-fileinfo php8-mod-filter php8-mod-ftp php8-mod-gd php8-mod-gettext php8-mod-gmp php8-mod-iconv php8-mod-imap php8-mod-intl php8-mod-ldap php8-mod-mbstring php8-mod-mysqlnd php8-mod-opcache php8-mod-openssl php8-mod-pcntl php8-mod-pdo-mysql php8-mod-pdo-pgsql php8-mod-pdo-sqlite php8-mod-pdo php8-mod-pgsql php8-mod-phar php8-mod-session php8-mod-shmop php8-mod-simplexml php8-mod-snmp php8-mod-soap php8-mod-sockets php8-mod-sqlite3 php8-mod-sysvmsg php8-mod-sysvsem php8-mod-sysvshm php8-mod-tokenizer php8-mod-xml php8-mod-xmlreader php8-mod-xmlwriter php8-mod-zip php8-pecl-dio php8-pecl-event php8-pecl-gmagick php8-pecl-http php8-pecl-mcrypt php8-pecl-raphf php8-pecl-redis php8-pecl-sodium php8-pecl-trader php8-mod-mysqli redis snmpd snmp-mibs snmp-utils zoneinfo-core zoneinfo-asia"
+# 安装失败的模块：  php8-mod-hash php8-mod-json php8-pecl-libevent php8-pecl-propro
+# php8-mod-gd 安装失败，手动删除 /opt/lib/libgd* 三个文件即可
 
 # 后续可能增加的包(缺少源支持)
-# php7-mod-imagick imagemagick imagemagick-jpeg imagemagick-png imagemagick-tiff imagemagick-tools
+# php8-mod-imagick imagemagick imagemagick-jpeg imagemagick-png imagemagick-tiff imagemagick-tools
 
 # Web程序
 # (1) phpMyAdmin（数据库管理工具）
-url_phpMyAdmin="https://files.phpmyadmin.net/phpMyAdmin/4.8.3/phpMyAdmin-4.8.3-all-languages.zip"
+url_phpMyAdmin="https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip"
 
 # (2) WordPress（使用最广泛的CMS）
 url_WordPress="https://cn.wordpress.org/wordpress-4.9.4-zh_CN.zip"
@@ -23,7 +28,7 @@ url_WordPress="https://cn.wordpress.org/wordpress-4.9.4-zh_CN.zip"
 url_Owncloud="https://download.owncloud.org/community/owncloud-10.0.10.zip"
 
 # (4) Nextcloud（Owncloud团队的新作，美观强大的个人云盘）
-url_Nextcloud="https://download.nextcloud.com/server/releases/nextcloud-13.0.6.zip"
+url_Nextcloud="https://download.nextcloud.com/server/releases/nextcloud-24.0.6.zip"
 
 # (5) h5ai（优秀的文件目录）
 url_h5ai="https://release.larsjung.de/h5ai/h5ai-0.29.0.zip"
@@ -32,16 +37,25 @@ url_h5ai="https://release.larsjung.de/h5ai/h5ai-0.29.0.zip"
 url_Lychee="https://github.com/electerious/Lychee/archive/master.zip"
 
 # (7) Kodexplorer（可道云aka芒果云在线文档管理器）
-url_Kodexplorer="http://static.kodcloud.com/update/download/kodexplorer4.36.zip"
+url_Kodexplorer="https://static.kodcloud.com/update/download/kodexplorer4.49.zip"
 
 # (8) Typecho (流畅的轻量级开源博客程序)
-url_Typecho="http://typecho.org/downloads/1.1-17.10.30-release.tar.gz"
+url_Typecho="https://github.com/typecho/typecho/releases/latest/download/typecho.zip"
 
 # (9) Z-Blog (体积小，速度快的PHP博客程序)
 url_Zblog="https://update.zblogcn.com/zip/Z-BlogPHP_1_5_2_1935_Zero.zip"
 
 # (10) DzzOffice (开源办公平台)
 url_DzzOffice="https://codeload.github.com/zyx0814/dzzoffice/zip/master"
+
+# (11) kodbox (可道云)
+url_kodbox="https://static.kodcloud.com/update/download/kodbox.1.34.zip"
+
+# (12) AriaNG (Aria WebUI)
+url_AriaNg="https://github.com/mayswind/AriaNg/releases/download/1.2.4/AriaNg-1.2.4.zip"
+
+# (13) Piwigo (开源相册)
+url_Piwigo="https://piwigo.org/download/dlcounter.php?code=latest"
 
 # 通用环境变量获取
 get_env()
@@ -149,14 +163,16 @@ init_onmp()
     echo 'unixsocketperm 777' >> /opt/etc/redis.conf 
 
     # 添加探针
-    cp /opt/onmp/tz.php /opt/wwwroot/default -R
-    add_vhost 81 default
+    cp index.html /opt/wwwroot/default -R
+    cp tz.php /opt/wwwroot/default -R
+    add_vhost 8000 default
     sed -e "s/.*\#php-fpm.*/    include \/opt\/etc\/nginx\/conf\/php-fpm.conf\;/g" -i /opt/etc/nginx/vhost/default.conf
     chmod -R 777 /opt/wwwroot/default
 
     # 生成ONMP命令
     set_onmp_sh
     onmp start
+    update_website_list
 }
 
 ############### 初始化Nginx ###############
@@ -221,7 +237,7 @@ nginx_special_conf()
 cat > "/opt/etc/nginx/conf/php-fpm.conf" <<-\OOO
 location ~ \.php(?:$|/) {
     fastcgi_split_path_info ^(.+\.php)(/.+)$; 
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+    fastcgi_pass unix:/opt/var/run/php8-fpm.sock;
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     include fastcgi_params;
@@ -273,7 +289,7 @@ location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updat
     fastcgi_param PATH_INFO $fastcgi_path_info;
     fastcgi_param modHeadersAvailable true;
     fastcgi_param front_controller_active true;
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+    fastcgi_pass unix:/opt/var/run/php8-fpm.sock;
     fastcgi_intercept_errors on;
     fastcgi_request_buffering off;
 }
@@ -347,7 +363,7 @@ location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updat
     fastcgi_param modHeadersAvailable true;
     fastcgi_param front_controller_active true;
     fastcgi_read_timeout 180;
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+    fastcgi_pass unix:/opt/var/run/php8-fpm.sock;
     fastcgi_intercept_errors on;
     fastcgi_request_buffering on;
 }
@@ -404,7 +420,7 @@ location / {
 location ~ \.php$ {
     include fastcgi.conf;
     fastcgi_intercept_errors on;
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+    fastcgi_pass unix:/opt/var/run/php8-fpm.sock;
     fastcgi_buffers 16 16k;
     fastcgi_buffer_size 32k;
 }
@@ -424,7 +440,7 @@ OOO
 
 }
 
-############## 重置、初始化MySQL #############
+############# 重置、初始化MySQL #############
 init_sql()
 {
     get_env
@@ -492,7 +508,7 @@ sleep 20
 sleep 60
 
 # 设置数据库密码
-mysqladmin -u root password 123456
+mysqladmin -u $username password 123456
 echo -e "\033[41;37m 数据库用户：root, 初始密码：123456 \033[0m"
 onmp restart
 }
@@ -500,20 +516,6 @@ onmp restart
 ############## PHP初始化 #############
 init_php()
 {
-# PHP7设置 
-/opt/etc/init.d/S79php7-fpm stop > /dev/null 2>&1
-
-mkdir -p /opt/usr/php/tmp/
-chmod -R 777 /opt/usr/php/tmp/
-
-sed -e "/^doc_root/d" -i /opt/etc/php.ini
-sed -e "s/.*memory_limit = .*/memory_limit = 128M/g" -i /opt/etc/php.ini
-sed -e "s/.*output_buffering = .*/output_buffering = 4096/g" -i /opt/etc/php.ini
-sed -e "s/.*post_max_size = .*/post_max_size = 8000M/g" -i /opt/etc/php.ini
-sed -e "s/.*max_execution_time = .*/max_execution_time = 2000 /g" -i /opt/etc/php.ini
-sed -e "s/.*upload_max_filesize.*/upload_max_filesize = 8000M/g" -i /opt/etc/php.ini
-sed -e "s/.*listen.mode.*/listen.mode = 0666/g" -i /opt/etc/php7-fpm.d/www.conf
-
 # PHP配置文件
 cat >> "/opt/etc/php.ini" <<-\PHPINI
 session.save_path = "/opt/usr/php/tmp/"
@@ -530,13 +532,27 @@ mysqli.default_socket=/opt/var/run/mysqld.sock
 pdo_mysql.default_socket=/opt/var/run/mysqld.sock
 PHPINI
 
-cat >> "/opt/etc/php7-fpm.d/www.conf" <<-\PHPFPM
+cat >> "/opt/etc/php8-fpm.d/www.conf" <<-\PHPFPM
 env[HOSTNAME] = $HOSTNAME
 env[PATH] = /opt/bin:/usr/local/bin:/usr/bin:/bin
 env[TMP] = /opt/tmp
 env[TMPDIR] = /opt/tmp
 env[TEMP] = /opt/tmp
 PHPFPM
+
+# php8设置 
+/opt/etc/init.d/S79php8-fpm stop > /dev/null 2>&1
+
+mkdir -p /opt/usr/php/tmp/
+chmod -R 777 /opt/usr/php/tmp/
+
+sed -e "/^doc_root/d" -i /opt/etc/php.ini
+sed -e "s/.*memory_limit = .*/memory_limit = 128M/g" -i /opt/etc/php.ini
+sed -e "s/.*output_buffering = .*/output_buffering = 4096/g" -i /opt/etc/php.ini
+sed -e "s/.*post_max_size = .*/post_max_size = 8000M/g" -i /opt/etc/php.ini
+sed -e "s/.*max_execution_time = .*/max_execution_time = 2000 /g" -i /opt/etc/php.ini
+sed -e "s/.*upload_max_filesize.*/upload_max_filesize = 8000M/g" -i /opt/etc/php.ini
+sed -e "s/.*listen.mode.*/listen.mode = 0666/g" -i /opt/etc/php8-fpm.d/www.conf
 }
 
 ############# 用户设置数据库密码 ############
@@ -553,7 +569,7 @@ set_passwd()
 remove_onmp()
 {
     /opt/etc/init.d/S70mysqld stop > /dev/null 2>&1
-    /opt/etc/init.d/S79php7-fpm stop > /dev/null 2>&1
+    /opt/etc/init.d/S79php8-fpm stop > /dev/null 2>&1
     /opt/etc/init.d/S80nginx stop > /dev/null 2>&1
     /opt/etc/init.d/S70redis stop > /dev/null 2>&1
     killall -9 nginx mysqld php-fpm redis-server > /dev/null 2>&1
@@ -601,22 +617,25 @@ vhost_list()
         echo "$path        $localhost:$port"
         logger -t "【ONMP】" "$path     $localhost:$port"
     done
-    echo "浏览器地址栏输入：$localhost:81 查看php探针"
+    echo "浏览器地址栏输入：$localhost:8000 查看默认网站及探针"
+	
+	
 }
 
 onmp_restart()
 {
     /opt/etc/init.d/S70mysqld stop > /dev/null 2>&1
-    /opt/etc/init.d/S79php7-fpm stop > /dev/null 2>&1
+    /opt/etc/init.d/S79php8-fpm stop > /dev/null 2>&1
     /opt/etc/init.d/S80nginx stop > /dev/null 2>&1
     killall -9 nginx mysqld php-fpm > /dev/null 2>&1
     sleep 3
     /opt/etc/init.d/S70mysqld start > /dev/null 2>&1
-    /opt/etc/init.d/S79php7-fpm start > /dev/null 2>&1
+    /opt/etc/init.d/S79php8-fpm start > /dev/null 2>&1
     /opt/etc/init.d/S80nginx start > /dev/null 2>&1
     sleep 3
     num=0
-    for PROC in 'nginx' 'php-fpm' 'mysqld'; do 
+    # for PROC in 'nginx' 'php-fpm' 'mysqld'; do 
+    for PROC in 'nginx' 'mysqld'; do 
         if [ -n "`pidof $PROC`" ]; then
             echo $PROC "启动成功";
         else
@@ -624,6 +643,13 @@ onmp_restart()
             num=`expr $num + 1`
         fi 
     done
+    
+    if [ -n "`ps | grep php-fpm  | grep master`" ]; then
+        echo "php-fpm 启动成功";
+    else
+        echo "php-fpm 启动失败";
+        num=`expr $num + 1`
+    fi 
 
     if [[ $num -gt 0 ]]; then
         echo "onmp启动失败"
@@ -650,7 +676,7 @@ case $1 in
     echo "onmp正在停止"
     logger -t "【ONMP】" "正在停止"
     /opt/etc/init.d/S70mysqld stop > /dev/null 2>&1
-    /opt/etc/init.d/S79php7-fpm stop > /dev/null 2>&1
+    /opt/etc/init.d/S79php8-fpm stop > /dev/null 2>&1
     /opt/etc/init.d/S80nginx stop > /dev/null 2>&1
     echo "onmp已停止"
     logger -t "【ONMP】" "已停止"
@@ -673,9 +699,9 @@ case $1 in
 
     php )
     case $2 in
-        start ) /opt/etc/init.d/S79php7-fpm start;;
-        stop ) /opt/etc/init.d/S79php7-fpm stop;;
-        restart ) /opt/etc/init.d/S79php7-fpm restart;;
+        start ) /opt/etc/init.d/S79php8-fpm start;;
+        stop ) /opt/etc/init.d/S79php8-fpm stop;;
+        restart ) /opt/etc/init.d/S79php8-fpm restart;;
         * ) echo "onmp php start|restart|stop";;
     esac
     ;;
@@ -774,9 +800,13 @@ cat << AAA
 (8) Typecho (流畅的轻量级开源博客程序)
 (9) Z-Blog (体积小，速度快的PHP博客程序)
 (10) DzzOffice (开源办公平台)
+(11) Kodbox(可道云)
+(12) AriaNG(Aria WebUI)
+(13) Piwigo(开源相册)
+
 (0) 退出
 AAA
-read -p "输入你的选择[0-11]: " input
+read -p "输入你的选择[0-13]: " input
 case $input in
     1) install_phpmyadmin;;
 2) install_wordpress;;
@@ -788,9 +818,13 @@ case $input in
 8) install_typecho;;
 9) install_zblog;;
 10) install_dzzoffice;;
+11) install_kodbox;;
+12) install_AriaNG;;
+13) install_Piwigo;;
+
 0) exit;;
-*) echo "你输入的不是 0 ~ 10 之间的!"
-break;;
+*) echo "你的输入不正确!"
+return ;;
 esac
 }
 
@@ -805,8 +839,16 @@ web_installer()
 
     # 获取用户自定义设置
     read -p "输入服务端口（请避开已使用的端口）[留空默认$port]: " nport
+
     if [[ $nport ]]; then
         port=$nport
+    fi
+    if [ -n "`lsof -i:$port`" ]; then
+        read -p "端口已使用, 请重新输入: " port
+    fi
+    if [ -n "`lsof -i:$port`" ]; then
+        echo "端口已使用, 退出"
+        exit
     fi
     read -p "输入目录名（留空默认：$name）: " webdir
     if [[ ! -n "$webdir" ]]; then
@@ -820,10 +862,10 @@ web_installer()
         read -p "网站目录 /opt/wwwroot/$webdir 已存在，是否删除: [y/n(小写)]" ans
         case $ans in
             y ) rm -rf /opt/wwwroot/$webdir; echo "已删除";;
-n ) echo "未删除";;
-* ) echo "没有这个选项"; exit;;
-esac
-fi
+            n ) echo "未删除";;
+            * ) echo "没有这个选项"; exit;;
+        esac
+    fi
 
     # 下载程序并解压
     suffix="zip"
@@ -1068,6 +1110,29 @@ install_kodexplorer()
     echo "浏览器地址栏输入：$localhost:$port 即可访问"
 }
 
+############## 安装kodbox可道云 ##########
+install_kodbox()
+{
+    # 默认配置
+    filelink=$url_kodbox
+    name="kodbox"
+    dirname="kodbox"
+    port=85
+    hookdir=$dirname
+
+    # 运行安装程序 
+    web_installer
+    echo "正在配置$name..."
+    chmod -R 777 /opt/wwwroot/$webdir
+
+    # 添加到虚拟主机
+    add_vhost $port $webdir
+    sed -e "s/.*\#php-fpm.*/    include \/opt\/etc\/nginx\/conf\/php-fpm.conf\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
+    onmp restart >/dev/null 2>&1
+    echo "$name安装完成"
+    echo "浏览器地址栏输入：$localhost:$port 即可访问"
+}
+
 ############# 安装Typecho ############
 install_typecho()
 {
@@ -1139,13 +1204,61 @@ install_dzzoffice()
     echo "DzzOffice应用市场中，某些应用无法自动安装的，请自行参看官网给的手动安装教程"
 }
 
+######### 安装 AriaNG #########
+install_AriaNG()
+{
+	
+    # 默认配置
+    filelink=$url_AriaNg
+    name="AriaNG"
+    dirname="AriaNG"
+	hookdir=$dirname
+    port=93
+
+    # 运行安装程序 
+    web_installer
+    echo "正在配置$name..."
+    chmod -R 777 /opt/wwwroot/$webdir     # 目录权限看情况使用
+
+    # 添加到虚拟主机
+    add_vhost $port $webdir
+    sed -e "s/.*\#php-fpm.*/    include \/opt\/etc\/nginx\/conf\/php-fpm.conf\;/g" -i /opt/etc/nginx/vhost/$webdir.conf         # 添加php-fpm支持
+    onmp restart >/dev/null 2>&1
+    echo "$name安装完成"
+    echo "浏览器地址栏输入：$localhost:$port 即可访问"
+}
+
+
+######### 安装 Piwigo #########
+install_Piwigo()
+{
+	
+    # 默认配置
+    filelink=$url_Piwigo
+    name="piwigo"
+    dirname="piwigo"
+    port=95
+
+    # 运行安装程序 
+    web_installer
+    echo "正在配置$name..."
+    chmod -R 777 /opt/wwwroot/$webdir     # 目录权限看情况使用
+
+    # 添加到虚拟主机
+    add_vhost $port $webdir
+    sed -e "s/.*\#php-fpm.*/    include \/opt\/etc\/nginx\/conf\/php-fpm.conf\;/g" -i /opt/etc/nginx/vhost/$webdir.conf         # 添加php-fpm支持
+    onmp restart >/dev/null 2>&1
+    echo "$name安装完成"
+    echo "浏览器地址栏输入：$localhost:$port 即可访问"
+}
+
 ############# 添加到虚拟主机 #############
 add_vhost()
 {
 # 写入文件
 cat > "/opt/etc/nginx/vhost/$2.conf" <<-\EOF
 server {
-    listen 81;
+    listen 8000;
     server_name localhost;
     root /opt/wwwroot/www/;
     index index.html index.htm index.php tz.php;
@@ -1201,7 +1314,7 @@ case $input in
 2) swapoff /opt/.swap;;
 3) del_swap;;
 *) echo "你输入的不是 1 ~ 3 之间的!"
-break;;
+return ;;
 esac 
 }
 
@@ -1275,7 +1388,7 @@ onmp redis start
 
 }
 
-############## 数据库自动备份 ##############
+############# 数据库自动备份 ##############
 sql_backup()
 {
 # 输出选项
@@ -1330,6 +1443,344 @@ sql_backup_off()
     echo "如果你使用了自动定时备份，请删除配置"
 }
 
+update_website_list()
+{
+# 获取路由器IP
+localhost=$(ifconfig | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}' | awk 'NR==1')
+if [[ ! -n "$localhost" ]]; then
+    localhost="你的路由器IP"
+fi
+
+#read -p "输入网站域名<home.xiaoze.pro>: " domain
+
+domain="http://home.xiaoze.pro"
+
+cat > "/opt/wwwroot/default/index.html" <<-\EOF
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>网站列表</title>
+    <style>
+        .container {width: 80%;margin: 5% auto 0;background-color: #f0f0f0; padding: 2% 2%; border-radius: 10px}
+        ul {padding-left: 20px;}
+		ul li {line-height: 2.3}
+        a {color: #20a53a; text-decoration: none;font-size:30px}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>网站列表</h1>
+		<ul>
+
+EOF
+
+echo "网站列表："
+
+for conf in /opt/etc/nginx/vhost/*;
+do
+	path=$(cat $conf | awk 'NR==4' | awk '{print $2}' | sed 's/;//')
+	port=$(cat $conf | awk 'NR==2' | awk '{print $2}' | sed 's/;//')
+	
+	name=${path:13}
+	name=${name///}  
+	echo "[$name]  $domain:$port"
+
+	echo "<li><a href=\"$domain:$port\">【$name】 port: $port</a></li>">>/opt/wwwroot/default/index.html
+	logger -t "【ONMP】" "$path     $domain:$port"
+done
+
+echo "
+       </ul>
+    </div>
+</body>
+</html>">>/opt/wwwroot/default/index.html
+
+}
+
+samba_tool()
+{
+
+# 输出选项
+cat << EOF
+=======================================================
+
+(1) 安装Samba
+(2) 设置密码
+(3) 增加共享目录
+(0) 退出
+
+EOF
+
+read -p "输入你的选择[序号]: " input
+case $input in
+1) install_samba;;
+2) change_samba_passwd;;
+3) set_share_flolder;;   
+0) exit;;
+*) echo "你输入序号不存在!"
+exit;;
+esac 
+
+} 
+
+install_samba()
+{
+clear    
+# 是否重新安装
+read -p "是否首次安装[no/yes]: " install_frist
+
+
+if [[ $install_frist = "yes" ]]; then
+    echo "开始安装"
+    opkg install  samba4-server samba4-admin samba4-libs samba4-utils
+
+    cat > "/opt/etc/samba/smb.conf" <<-\EOF
+[global]
+netbios name = Entware-SMB4
+interfaces = lo br0 eth0
+server string = Samba on Entware
+workgroup = WORKGROUP
+guest account = nobody
+security = user
+map to guest = Bad User
+guest ok = yes
+guest only = no
+timestamp logs = no
+preserve case = yes
+short preserve case = yes
+socket options = TCP_NODELAY SO_KEEPALIVE IPTOS_LOWDELAY SO_RCVBUF=65536 SO_SNDBUF=65536
+log level = 0
+syslog = 0
+passdb backend = smbpasswd
+smb encrypt = disabled
+smb passwd file = /opt/etc/samba/smbpasswd
+EOF
+    echo "配置写入成功"
+
+/opt/etc/init.d/S91smb restart
+chmod 755 /opt/var/run/samba/ncalrpc
+/opt/etc/init.d/S91smb restart
+
+change_samba_passwd
+set_share_flolder
+
+fi
+
+}
+
+
+change_samba_passwd()
+{    
+# 获取用户名
+if [[ $USER ]]; then
+    username=$USER
+elif [[ -n $(whoami 2>/dev/null) ]]; then
+    username=$(whoami 2>/dev/null)
+else
+    username=$(cat /etc/passwd | sed "s/:/ /g" | awk 'NR==1'  | awk '{printf $1}')
+fi
+
+# 是否更新密码
+read -p "是否更新密码[no/yes]: " updata_password
+
+if [[ $updata_password = "yes" ]]; then
+    echo "更新samba密码"
+    smbpasswd -a $username
+    /opt/etc/init.d/S91smb restart
+fi
+
+}
+
+set_share_flolder()
+{
+clear
+# 获取用户名
+if [[ $USER ]]; then
+    username=$USER
+elif [[ -n $(whoami 2>/dev/null) ]]; then
+    username=$(whoami 2>/dev/null)
+else
+    username=$(cat /etc/passwd | sed "s/:/ /g" | awk 'NR==1'  | awk '{printf $1}')
+fi
+
+# 增加切共享目录：
+echo "
+    ##显示共享文件夹名称，可以是中文名称
+    [diskshow_name]
+    ##共享路径
+    path = /storage/external_storage/diskname
+    #强制用户
+    force user = username
+    #强制组
+    force group = username
+    #创建文件自身权限
+    create mask = 0666
+    #创建文件夹自身权限
+    directory mask = 0777
+    read only = yes
+    #除root外其他用户只读(yes/no)
+    write list = username
+    #对于windows 以游客身份是否访问（yes/no），
+    guest ok = no
+    #目录继承
+    inherit owner = yes
+" >>/opt/etc/samba/smb.conf
+
+echo "显示所有磁盘: "
+root_path="/storage/external_storage/"
+ls $root_path
+
+read -p "输入要共享的磁盘[名称]: " diskname
+read -p "输入显示名称: " diskshow_name
+
+share_path=$root_path$diskname
+
+sed -e "s/username/$username/g" -i /opt/etc/samba/smb.conf
+sed -e "s/diskshow_name/$diskshow_name/g" -i /opt/etc/samba/smb.conf
+sed -e "s/diskname/$diskname/g" -i /opt/etc/samba/smb.conf
+echo "共享目录: $share_path, 显示名称: $diskshow_name"
+/opt/etc/init.d/S91smb restart
+
+}
+
+
+install_aria2(){
+    clear
+    opkg install aria2
+    # rpc-secret=Passw0rd
+    # dir=/opt/var/aria2/downloads
+
+    read -p  "请输入连接密码: " -s password1
+    echo ""
+    read -p  "请再次输入连接密码: " -s password2
+    echo ""
+
+
+    if [[ $password1 = $password2 ]] ;then
+        sed -e "s/.*rpc-secret=.*/rpc-secret=$password2/g" -i /opt/etc/aria2.conf
+        echo "密码更新成功"
+    else
+        echo "两次密码输入不一致"
+    fi
+    
+    download_path_default="/storage/external_storage/sda5/download"
+    read -p "请输入下载目录[$download_path_default]: " download_path_input
+    if [ -z "${download_path_input}" ]; then
+        download_path=$download_path_default
+    else
+        download_path=$download_path_input
+
+    fi
+
+    download_path=${download_path////\\/}
+    # 处理后字符状态
+    # download_path="\/storage\/external_storage\/sda5\/download"
+    
+    sed -e "s/.*dir=.*/dir="$download_path"/g" -i /opt/etc/aria2.conf
+
+    /opt/etc/init.d/S81aria2  restart
+    /opt/etc/init.d/S81aria2  start
+
+
+}
+
+install_node()
+{   
+    clear
+    read -p "是否安装/重新安装 node [yes/no]: " install_confirm
+    if [[ $install_confirm = "yes" ]]; then
+        opkg install  node  node-npm
+    fi
+
+    read -p "是否添加网站[yes/no]: " add_web
+    if [[ $add_web = "yes" ]]; then
+            clear
+            port=87
+            name="nodeweb"
+            read -p "输入nginx服务端口（请避开已使用的端口）[留空默认$port]: " nport
+
+            if [[ $nport ]]; then
+                port=$nport
+            fi
+            if [ -n "`lsof -i:$port`" ]; then
+                read -p "端口已使用, 请重新输入: " port
+            fi
+            if [ -n "`lsof -i:$port`" ]; then
+                echo "端口已使用, 退出"
+                exit
+            fi
+
+            read -p "输入node服务端口: " node_port
+
+
+            read -p "输入目录名（留空默认：$name）: " webdir
+            if [[ ! -n "$webdir" ]]; then
+                webdir=$name
+            fi
+
+            # 检查目录是否存在
+            if [[ ! -d "/opt/wwwroot/$webdir" ]] ; then
+                echo "开始安装..."
+            else
+                read -p "网站目录 /opt/wwwroot/$webdir 已存在，是否删除: [y/n(小写)]" ans
+                case $ans in
+                    y ) rm -rf /opt/wwwroot/$webdir; echo "已删除"; mkdir /opt/wwwroot/$webdir;;
+                    n ) echo "未删除";;
+                    * ) echo "没有这个选项"; exit;;
+                esac
+            fi
+            cat > "/opt/etc/nginx/vhost/$webdir.conf" <<-\EOF
+server{
+    listen nginx_server_port;
+    server_name localhost;
+    #root /opt/wwwroot/www/;
+    location / {
+        proxy_pass http://127.0.0.1:node_server_port;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_connect_timeout 30s;
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 30s;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+EOF
+
+    sed -e "s/node_server_port/"$node_port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+    sed -e "s/nginx_server_port/"$port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+    sed -e "s/.*\/opt\/wwwroot\/www\/.*/    #root \/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
+
+
+    echo "配置写入成功"
+
+    cat > "/opt/etc/init.d/node_$webdir" <<-\EOF
+#!/bin/sh
+
+cd /opt/wwwroot/www/
+node index.js&
+
+EOF
+
+    sed -e "s/\/opt\/wwwroot\/www\/.*/\/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/init.d/node_$webdir
+    echo "写入启动文件成功"
+
+    onmp start
+    update_website_list
+    
+    echo "
+请在'/opt/wwwroot/$webdir'目录下上传web文件, 并以默认 'node index.js&' 命令启动,
+如不是此启动方式请手动修改'/opt/etc/init.d/node_$webdir' 目录下自动启动文件.
+"
+
+    fi
+
+}
+
 ###########################################
 ################# 脚本开始 #################
 ###########################################
@@ -1361,13 +1812,17 @@ cat << EOF
 (8) 网站管理
 (9) 开启Swap
 (10) 开启 Redis
+(11) 网站目录更新到默认网站
+(12) Samba[文件共享]
+(13) Aria2[下载工具]
+(14) Node安装与配置服务器
 (0) 退出
 
 EOF
 
-read -p "输入你的选择[0-9]: " input
+read -p "输入你的选择[序号]: " input
 case $input in
-    1) install_onmp_ipk;;
+1) install_onmp_ipk;;
 2) remove_onmp;;
 3) set_passwd;;
 4) init_sql;;
@@ -1377,8 +1832,13 @@ case $input in
 8) web_manager;;
 9) set_swap;;
 10) redis;;
+11) update_website_list;;
+12) samba_tool;;
+13) install_aria2;;
+14) install_node;;
+
 0) exit;;
-*) echo "你输入的不是 0 ~ 8 之间的!"
+*) echo "你输入序号不存在!"
 exit;;
 esac 
 }
@@ -1390,4 +1850,6 @@ if [ "$1" == "$re_sh" ]; then
     exit;
 fi  
 
+
 start
+
