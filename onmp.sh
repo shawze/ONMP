@@ -1898,15 +1898,19 @@ if [ -n "`lsof -i:$port`" ]; then
     echo "端口已使用, 退出"
     exit
 fi
-read -p "输入node服务端口: " node_port
+read -p "输入代理地址[例: http://www.baidu.com]: " url
 read -p "输入网站名称($webname): " webdir
 if [[ ! -n "$webdir" ]]; then
     webdir=$webname
 fi
 add_node_nginx_config  $webdir
-sed -e "s/node_server_port/"$node_port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+
+url=${url////\\/}
+
 sed -e "s/nginx_server_port/"$port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
 sed -e "s/.*\/opt\/wwwroot\/www\/.*/    #root \/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
+sed -e "s/proxy_pass.*/proxy_pass '$url';/g" -i /opt/etc/nginx/vhost/$webdir.conf
+
 echo "配置写入成功"
 
 
