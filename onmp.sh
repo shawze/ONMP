@@ -1490,9 +1490,12 @@ if [[ ! -n "$localhost" ]]; then
     localhost="你的路由器IP"
 fi
 
-#read -p "输入网站域名<home.xiaoze.pro>: " domain
+domain="home.xiaoze.pro"
 
-domain="http://home.xiaoze.pro"
+read -p "输入网站域名<$domain>: " domain_input
+if [[ -n "$domain_input" ]]; then
+  domain=$domain_input
+fi
 
 cat > "/opt/wwwroot/default/index.html" <<-\EOF
 <!doctype html>
@@ -1523,10 +1526,10 @@ do
 
 	name=${path:13}
 	name=${name///}
-	echo "[$name]  $domain:$port"
+#	echo "$link"
+	echo "[$name]  http://$domain:$port"
 
-	echo "<li><a href=\"$domain:$port\">【$name】 port: $port</a></li>">>/opt/wwwroot/default/index.html
-	logger -t "【ONMP】" "$path     $domain:$port"
+	echo "<li><a href=\"http://$domain:$port\">【$name】 port: $port</a></li>">>/opt/wwwroot/default/index.html
 done
 
 echo "
@@ -1864,12 +1867,53 @@ link_storage()
         do
             diskshow_name=${flodername##*/}
             link_path="/opt/mnt/"$diskshow_name
-#            mkdir -p $link_path
-#            ln -s  $flodername  $link_path
             ln -s  $flodername  "/opt/mnt/"
             echo "$link_path  $flodername"
 
         done
+}
+
+change_ipk_source()
+{
+  sed -i 's|bin.entware.net|mirrors.bfsu.edu.cn/entware|g' /opt/etc/opkg.conf
+  opkg update
+}
+
+add_nginx_proxy_web()
+{
+# 添加网站
+
+clear
+port=8010
+webname="proxyweb"
+read -p "输入nginx服务端口（请避开已使用的端口）[留空默认$port]: " nport
+# 端口检测
+if [[ $nport ]]; then
+    port=$nport
+fi
+if [ -n "`lsof -i:$port`" ]; then
+    read -p "端口已使用, 请重新输入: " port
+fi
+if [ -n "`lsof -i:$port`" ]; then
+    echo "端口已使用, 退出"
+    exit
+fi
+read -p "输入node服务端口: " node_port
+read -p "输入网站名称($webname): " webdir
+if [[ ! -n "$webdir" ]]; then
+    webdir=$webname
+fi
+add_node_nginx_config  $webdir
+sed -e "s/node_server_port/"$node_port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+sed -e "s/nginx_server_port/"$port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+sed -e "s/.*\/opt\/wwwroot\/www\/.*/    #root \/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
+echo "配置写入成功"
+
+
+# 启动并更新服务器
+onmp start
+update_website_list
+
 }
 
 ###########################################
@@ -1890,15 +1934,17 @@ cat << EOF
 (6) 重置数据库
 (7) 数据库自动备份
 (8) 安装网站程序
-(9) 删除网站
-(10) 更新网站目录到默认网站
-(11) 全部重置[会删除网站目录, 请注意备份]
-(12) 卸载Nginx&MaraDB&PHP
+(9) 添加Nginx服务器代理
+(10) 删除网站
+(11) 更新网站目录到默认网站
+(12) 全部重置[会删除网站目录, 请注意备份]
+(13) 卸载Nginx&MaraDB&PHP
 -------------------------------------------------------
-(13) 开启Redis
-(14) Samba[文件共享]
-(15) Aria2[下载工具]
-(16) 磁盘链接到/opt/mnt
+(14) 开启Redis
+(15) Samba[文件共享]
+(16) Aria2[下载工具]
+(17) 磁盘链接到/opt/mnt
+(18) entware更改为国内源
 (0) 退出
 =======================================================
 
@@ -1914,14 +1960,16 @@ case $input in
 6) init_sql;;
 7) sql_backup;;
 8) install_website;;
-9) web_manager;;
-10) update_website_list;;
-11) init_onmp;;
-12) remove_onmp;;
-13) redis;;
-14) samba_tool;;
-15) install_aria2;;
-16) link_storage;;
+9) add_nginx_proxy_web;;
+10) web_manager;;
+11) update_website_list;;
+12) init_onmp;;
+13) remove_onmp;;
+14) redis;;
+15) samba_tool;;
+16) install_aria2;;
+17) link_storage;;
+18) change_ipk_source;;
 
 0) exit;;
 *) echo "你输入序号不存在!"
