@@ -2,7 +2,7 @@
 # @Author: xzhih
 # @Date:   2017-07-29 06:10:54
 # @Last Modified by:   shawze
-# @Last Modified time: 2019-06-09 11:39:26
+# @Last Modified time: 2022-10-22 16:18:00
 
 # 软件包列表
 pkgbaselist="wget wget-ssl lsof unzip grep sed tar ca-certificates coreutils-whoami
@@ -85,30 +85,22 @@ get_env()
 ##### 软件包状态检测 #####
 install_baseipk()
 {
-    read -p "是否强制重新安装[no/yes]: " force_reinstall
-    if [ -z $force_reinstall ]; then
-      force_reinstall="no"
-    fi
     notinstall=""
-    for data in $pkgbaselist ; do
-        if [[ "$force_reinstall" = "yes" ]]; then
+    for data in $pkgbaselist ;
+      do
+          if [[ `opkg list-installed | grep $data | wc -l` -ne 0 ]];then
+            echo "$data 已安装"
+          else
+            notinstall="$notinstall $data"
             echo "$data 正在安装..."
-            opkg --force-reinstall install $data
-        elif [[ "$force_reinstall" = "no"  ]]; then
-            if [[ `opkg list-installed | grep $data | wc -l` -ne 0 ]];then
-              echo "$data 已安装"
-            else
-              notinstall="$notinstall $data"
-              echo "$data 正在安装..."
-              opkg install $data
-            fi
-        fi
-    done
+            opkg install $data
+          fi
+      done
 }
 
 install_check()
 {
-    install_baseipk
+    install_baseipk > /dev/null 2>&1
     # 检查安装基础包
     echo "开始安装Nginx&MaraDB"
     read -p "是否强制重新安装[no/yes]: " force_reinstall
@@ -1755,56 +1747,9 @@ install_aria2(){
 
 }
 
-install_node()
+add_node_nginx_config()
 {
-    clear
-    read -p "是否安装/重新安装 node [yes/no]: " install_confirm
-    if [ -z $install_confirm ]; then
-        install_confirm="no"
-    fi
-    if [[ $install_confirm == "yes" ]]; then
-        opkg install  node  node-npm
-    fi
-
-    read -p "是否添加网站[yes/no]: " add_web
-    if [[ $add_web == "yes" ]]; then
-            clear
-            port=87
-            name="nodeweb"
-            read -p "输入nginx服务端口（请避开已使用的端口）[留空默认$port]: " nport
-
-            if [[ $nport ]]; then
-                port=$nport
-            fi
-            if [ -n "`lsof -i:$port`" ]; then
-                read -p "端口已使用, 请重新输入: " port
-            fi
-            if [ -n "`lsof -i:$port`" ]; then
-                echo "端口已使用, 退出"
-                exit
-            fi
-
-            read -p "输入node服务端口: " node_port
-
-
-            read -p "输入目录名（留空默认：$name）: " webdir
-            if [[ ! -n "$webdir" ]]; then
-                webdir=$name
-            fi
-
-            # 检查目录是否存在
-            if [[ ! -d "/opt/wwwroot/$webdir" ]] ; then
-                echo "开始安装..."
-                mkdir /opt/wwwroot/$webdir
-            else
-                read -p "网站目录 /opt/wwwroot/$webdir 已存在，是否删除: [y/n(小写)]" ans
-                case $ans in
-                    y ) rm -rf /opt/wwwroot/$webdir; echo "已删除"; mkdir /opt/wwwroot/$webdir;;
-                    n ) echo "未删除";;
-                    * ) echo "没有这个选项"; exit;;
-                esac
-            fi
-            cat > "/opt/etc/nginx/vhost/$webdir.conf" <<-\EOF
+cat > "/opt/etc/nginx/vhost/$webdir.conf" <<-\EOF
 server{
     listen nginx_server_port;
     server_name localhost;
@@ -1824,35 +1769,86 @@ server{
     }
 }
 EOF
+}
 
-    sed -e "s/node_server_port/"$node_port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
-    sed -e "s/nginx_server_port/"$port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
-    sed -e "s/.*\/opt\/wwwroot\/www\/.*/    #root \/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
-
-
-    echo "配置写入成功"
-
-    cat > "/opt/etc/init.d/node_$webdir" <<-\EOF
+add_node_auto_start_config()
+{
+cat > "/opt/etc/init.d/node_$webdir" <<-\EOF
 #!/bin/sh
 
 cd /opt/wwwroot/www/
 node index.js&
 
 EOF
+}
 
-    sed -e "s/\/opt\/wwwroot\/www\/.*/\/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/init.d/node_$webdir
-    echo "写入启动文件成功"
-
-    onmp start
-    update_website_list
-
-    echo "
-请在'/opt/wwwroot/$webdir'目录下上传web文件, 并以默认 'node index.js&' 命令启动,
-如不是此启动方式请手动修改'/opt/etc/init.d/node_$webdir' 目录下自动启动文件.
-"
-
+install_node()
+{
+    clear
+    # 安装 node 服务器
+    read -p "是否安装/重新安装 node [yes/no]: " install_confirm
+    if [ -z $install_confirm ]; then
+        install_confirm="no"
+    fi
+    if [[ $install_confirm == "yes" ]]; then
+        #opkg install  node  node-npm
+        opkg --force-reinstall install node  node-npm
     fi
 
+    # 添加网站
+    read -p "是否添加网站[yes/no]: " add_web
+    if [ -z $add_web ]; then
+        add_web="no"
+    fi
+    if [[ $add_web == "yes" ]]; then
+        clear
+        port=87
+        webname="nodeweb"
+        read -p "输入nginx服务端口（请避开已使用的端口）[留空默认$port]: " nport
+        # 端口检测
+        if [[ $nport ]]; then
+            port=$nport
+        fi
+        if [ -n "`lsof -i:$port`" ]; then
+            read -p "端口已使用, 请重新输入: " port
+        fi
+        if [ -n "`lsof -i:$port`" ]; then
+            echo "端口已使用, 退出"
+            exit
+        fi
+        read -p "输入node服务端口: " node_port
+        read -p "输入目录名（留空默认：$webname）: " webdir
+        if [[ ! -n "$webdir" ]]; then
+            webdir=$webname
+        fi
+        add_node_nginx_config  $webdir
+        sed -e "s/node_server_port/"$node_port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+        sed -e "s/nginx_server_port/"$port"/g" -i /opt/etc/nginx/vhost/$webdir.conf
+        sed -e "s/.*\/opt\/wwwroot\/www\/.*/    #root \/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/nginx/vhost/$webdir.conf
+        echo "配置写入成功"
+
+        # 检查目录是否存在, 创建目录
+        if [[ ! -d "/opt/wwwroot/$webdir" ]] ; then
+            echo "开始安装..."
+            mkdir /opt/wwwroot/$webdir
+        else
+            read -p "网站目录 /opt/wwwroot/$webdir 已存在，是否删除: [y/n(小写)]" ans
+            case $ans in
+                y ) rm -rf /opt/wwwroot/$webdir; echo "已删除"; mkdir /opt/wwwroot/$webdir;;
+                n ) echo "未删除";;
+                * ) echo "没有这个选项"; exit;;
+            esac
+        fi
+        # 创建启动脚本
+        add_node_auto_start_config  $webdir
+        sed -e "s/\/opt\/wwwroot\/www\/.*/\/opt\/wwwroot\/$webdir\/\;/g" -i /opt/etc/init.d/node_$webdir
+        echo "写入启动文件成功"
+        # 启动并更新服务器
+        onmp start
+        update_website_list
+        echo "请在'/opt/wwwroot/$webdir'目录下上传web文件, 并以默认 'node index.js&' \
+        命令启动,如不是此启动方式请手动修改'/opt/etc/init.d/node_$webdir' 目录下自动启动文件."
+    fi
 }
 
 ###########################################
@@ -1861,20 +1857,8 @@ EOF
 start()
 {
 # 输出选项
+clear
 cat << EOF
-=======================================================
-      ___           ___           ___           ___    
-     /  /\         /__/\         /__/\         /  /\   
-    /  /::\        \  \:\       |  |::\       /  /::\  
-   /  /:/\:\        \  \:\      |  |:|:\     /  /:/\:\ 
-  /  /:/  \:\   _____\__\:\   __|__|:|\:\   /  /:/~/:/ 
- /__/:/ \__\:\ /__/::::::::\ /__/::::| \:\ /__/:/ /:/  
- \  \:\ /  /:/ \  \:\~~\~~\/ \  \:\~~\__\/ \  \:\/:/   
-  \  \:\  /:/   \  \:\  ~~~   \  \:\        \  \::/    
-   \  \:\/:/     \  \:\        \  \:\        \  \:\    
-    \  \::/       \  \:\        \  \:\        \  \:\   
-     \__\/         \__\/         \__\/         \__\/   
-
 =======================================================
 (1) 安装基础工具包[否则脚本无法运行]
 (2) 开启Swap[小内存时需开启,否则MaraDB易安装失败]

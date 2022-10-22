@@ -12,21 +12,26 @@ Forked form https://github.com/xzhih/ONMP
 - 部分web程序不能正常安装、未更新至新版
 
 ```
-(1) 安装ONMP
-(2) 卸载ONMP
-(3) 设置数据库密码
-(4) 重置数据库
-(5) 数据库自动备份
-(6) 全部重置（会删除网站目录，请注意备份）
-(7) 安装网站程序
-(8) 网站管理
-(9) 开启Swap
-(10) 开启 Redis
-(11) 网站目录更新到默认网站
-(12) Samba[文件共享]
-(13) Aria2[下载工具]
-(14) Node安装与配置服务器
+=======================================================
+(1) 安装基础工具包[否则脚本无法运行]
+(2) 开启Swap[小内存时需开启,否则MaraDB易安装失败]
+-------------------------------------------------------
+(3) 安装Nginx&MaraDB&PHP[会删除网站目录, 请注意备份]
+(4) 安装Node与配置服务器
+(5) 设置数据库密码
+(6) 重置数据库
+(7) 数据库自动备份
+(8) 安装网站程序
+(9) 删除网站
+(10) 更新网站目录到默认网站
+(11) 全部重置[会删除网站目录, 请注意备份]
+(12) 卸载Nginx&MaraDB&PHP
+-------------------------------------------------------
+(13) 开启Redis
+(14) Samba[文件共享]
+(15) Aria2[下载工具]
 (0) 退出
+=======================================================
 ```
 
 Web安装目录
@@ -79,20 +84,21 @@ $ sh -c "$(curl -kfsSl https://raw.githubusercontent.com/shawze/ONMP/master/onec
 
 ```
 # 进入 entware 挂载目录
-cd /opt && opkg install wget unzip 
+cd /opt && opkg install wget unzip  wget-ssl 
 
 # 下载软件包
 wget --no-check-certificate -O /opt/onmp.zip https://github.com/shawze/ONMP/archive/master.zip 
 
 # 解压
-unzip /opt/onmp.zip 
-cd /opt/ONMP-master 
+unzip /opt/onmp.zip
+mv /opt/ONMP-master /opt/onmp
+cd /opt/onmp
 
 # 设置权限
 chmod +x ./onmp.sh 
 
 # 运行
-./onmp.sh 
+sh onmp.sh 
 ```
 
 
