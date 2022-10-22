@@ -1851,6 +1851,27 @@ install_node()
     fi
 }
 
+link_storage()
+{
+    root_path="/storage/external_storage/"
+    if [ -d $root_path ]; then
+      root_path=$root_path"*"
+    else
+      root_path="/mnt/*"
+    fi
+    mkdir /opt/mnt/
+    for flodername in $root_path;
+        do
+            diskshow_name=${flodername##*/}
+            link_path="/opt/mnt/"$diskshow_name
+#            mkdir -p $link_path
+#            ln -s  $flodername  $link_path
+            ln -s  $flodername  "/opt/mnt/"
+            echo "$link_path  $flodername"
+
+        done
+}
+
 ###########################################
 ################# 脚本开始 #################
 ###########################################
@@ -1877,6 +1898,7 @@ cat << EOF
 (13) 开启Redis
 (14) Samba[文件共享]
 (15) Aria2[下载工具]
+(16) 磁盘链接到/opt/mnt
 (0) 退出
 =======================================================
 
@@ -1899,6 +1921,7 @@ case $input in
 13) redis;;
 14) samba_tool;;
 15) install_aria2;;
+16) link_storage;;
 
 0) exit;;
 *) echo "你输入序号不存在!"
