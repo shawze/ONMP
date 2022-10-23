@@ -1724,25 +1724,25 @@ install_aria2(){
         done
     read -p "请选择下载目录[序号]: " select_disk
     i=0
-    download_path_default=""
+    download_path=""
     for disk_name in $root_path;
       do
         if [ $i == $select_disk ]; then
-          download_path_default=$disk_name"/download"
+          download_path=$disk_name"/download"
         fi
         i=`expr $i + 1`
       done
 
-    if [ -n "${download_path_default}" ]; then
+    if [ -n "${download_path}" ]; then
 #        echo  "下载目录设置为: $download_path_default"
-        download_path=${download_path////\\/}
+        download_path_re=${download_path////\\/}
         # 处理后字符状态
         # download_path="\/storage\/external_storage\/sda5\/download"
-        sed -e "s/.*dir=.*/dir="$download_path"/g" -i /opt/etc/aria2.conf
+        sed -e "s/.*dir=.*/dir="$download_path_re"/g" -i /opt/etc/aria2.conf
     fi
 
     echo "服务器端口: 6800 密码: $password1"
-    echo "下载目录: $download_path_default"
+    echo "下载目录: $download_path"
 
     # 重启服务并检查
     /opt/etc/init.d/S81aria2  restart
